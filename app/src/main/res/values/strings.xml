@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HikiateWeb</string>
+    <string name="kokban">工管No.</string>
+    <string name="hinban">品番</string>
+    <string name="lotno">ロットNo.</string>
+    <string name="carbon">カーボン</string>
+    <string name="cantag">缶タグ</string>
+</resources>
