@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // クリック時の処理
+
                 String urlStr = "http://10.1.1.61/WebAPI_Koyo_C/hikiate/get/574237";
                 GetKokanInfoTask task = new GetKokanInfoTask(urlStr, "GET", kokanInfoDisplay);
                 task.execute();
