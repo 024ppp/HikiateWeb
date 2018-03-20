@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.hikiateweb.MainActivity">
+    tools:context="com.example.administrator.hikiateweb.View.MainActivity">
 
     <TextView
         android:id="@+id/t1"
@@ -77,6 +77,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="textPersonName"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/t1"
@@ -89,6 +90,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="textPersonName"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/t1"
@@ -111,10 +113,95 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="232dp"
         android:text="Button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/t4" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/c1"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="228dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/c2"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginLeft="24dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c1" />
+
+    <TextView
+        android:id="@+id/c3"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c2" />
+
+    <TextView
+        android:id="@+id/c4"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c3" />
+
+    <TextView
+        android:id="@+id/c5"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c4" />
+
+    <TextView
+        android:id="@+id/c6"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c5" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,11 @@
 package com.example.administrator.hikiateweb.Display;
 
 import android.app.Activity;
-import android.content.Context;
+import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.example.administrator.hikiateweb.Model.Data.Data;
+import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 
 /**
@@ -21,10 +23,19 @@ public class KokanInfoDisplay extends Display{
     }
 
     @Override
-    public void setMsg(String... msgs) {
-        kokban_text.setText(msgs[0]);
-        hinban_text.setText(msgs[1]);
-        lotno_text.setText(msgs[2]);
-        carbon_text.setText(msgs[3]);
+    public void showData(Data d) {
+        DataHikiate data = (DataHikiate) d;
+
+        if (!TextUtils.isEmpty(data.ErrMsg)) {
+            kokban_text.setText("");
+            return;
+        }
+
+        kokban_text.setText(data.KOKBAN);
+        hinban_text.setText(data.SM21S_DTKSHIN);
+        lotno_text.setText(data.MD01_LOTBAN);
+        carbon_text.setText(data.MM03_ZAINMK);
+
+        kokban_text.setFocusable(false);
     }
 }

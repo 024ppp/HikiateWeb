@@ -1,6 +1,6 @@
 package com.example.administrator.hikiateweb.AsyncTask;
 
-
+import com.example.administrator.hikiateweb.Display.CantagDisplay;
 import com.example.administrator.hikiateweb.Display.Display;
 import com.example.administrator.hikiateweb.Display.KokanInfoDisplay;
 import com.example.administrator.hikiateweb.Model.Data.DataCantag;
@@ -11,16 +11,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Created by Administrator on 2018/03/16.
+ * Created by Administrator on 2018/03/20.
  */
 
-public class GetKokanInfoTask extends AbstractAsyncTask {
+public class CheckCantagTask extends AbstractAsyncTask {
     private Display display;
     private MainActivity activity;
 
-    public GetKokanInfoTask(String urlStr, String requestMethod, MainActivity activity) {
+    public CheckCantagTask(String urlStr, String requestMethod, MainActivity activity) {
         super(urlStr, requestMethod);
-        this.display = new KokanInfoDisplay(activity);
+        this.display = new CantagDisplay(activity);
         this.activity = activity;
     }
 
@@ -28,12 +28,19 @@ public class GetKokanInfoTask extends AbstractAsyncTask {
     public void applyDataToScreen(String result) {
         //受信したJsonデータを加工して、画面に反映させる
         try {
+            //缶タグデータをパース
             ObjectMapper mapper = new ObjectMapper();
-            DataHikiate d = mapper.readValue(result, DataHikiate.class);
+            DataCantag dataCantag = mapper.readValue(result, DataCantag.class);
+
+            //Dataを引っ張ってきて、缶タグデータをプラス
+            DataHikiate d = activity.getDataHikiate();
+            d.PC01_CANNO.add(dataCantag.PC01_CANNO);
+            d.PC01_KOKBAN.add(dataCantag.PC01_KOKBAN);
+
             display.showData(d);
             activity.setDataHikiate(d);
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
 
         }
 

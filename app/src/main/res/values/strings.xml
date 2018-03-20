@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">HikiateWeb</string>
+    <string name="action_settings">設定</string>
+    <string name="action_finish">終了</string>
     <string name="kokban">工管No.</string>
     <string name="hinban">品番</string>
     <string name="lotno">ロットNo.</string>
