@@ -2,9 +2,16 @@
     <string name="app_name">HikiateWeb</string>
     <string name="action_settings">設定</string>
     <string name="action_finish">終了</string>
+    <!--
     <string name="kokban">工管No.</string>
     <string name="hinban">品番</string>
     <string name="lotno">ロットNo.</string>
     <string name="carbon">カーボン</string>
     <string name="cantag">缶タグ</string>
+    -->
+    <string name="kokban">KOKBAN</string>
+    <string name="hinban">HINBAN</string>
+    <string name="lotno">LOTNO</string>
+    <string name="carbon">CARBON</string>
+    <string name="cantag">CANTAG</string>
 </resources>
