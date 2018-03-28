@@ -8,10 +8,14 @@
     <string name="lotno">ロットNo.</string>
     <string name="carbon">カーボン</string>
     <string name="cantag">缶タグ</string>
+    <string name="clear">クリア</string>
+    <string name="upd">登録</string>
     -->
     <string name="kokban">KOKBAN</string>
     <string name="hinban">HINBAN</string>
     <string name="lotno">LOTNO</string>
     <string name="carbon">CARBON</string>
     <string name="cantag">CANTAG</string>
+    <string name="clear">CLEAR</string>
+    <string name="upd">UPD</string>
 </resources>

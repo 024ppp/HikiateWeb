@@ -1,5 +1,7 @@
 package com.example.administrator.hikiateweb.Display;
 
+import android.widget.TextView;
+
 import com.example.administrator.hikiateweb.Model.Data.Data;
 
 /**
@@ -7,5 +9,6 @@ import com.example.administrator.hikiateweb.Model.Data.Data;
  */
 
 public abstract class Display {
-    abstract public void showData(Data d);
+    abstract public boolean showData(Data d);
+    abstract public void showTimeoutMessage();
 }

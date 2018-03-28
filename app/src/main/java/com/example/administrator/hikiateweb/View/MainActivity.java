@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,116 +20,56 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.administrator.hikiateweb.AsyncTask.CheckCantagTask;
 import com.example.administrator.hikiateweb.AsyncTask.GetKokanInfoTask;
-import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Controller.NfcTags;
+import com.example.administrator.hikiateweb.Util.Constants;
+import com.example.administrator.hikiateweb.Util.HikiateUtil;
 
 public class MainActivity extends AppCompatActivity {
-
-    String ip;
-
     DataHikiate dataHikiate;
-    NfcTags nfcTags = null;
-
-
-    //このへんの細々したもんはenumにまとめる
+    HikiateUtil hikiateUtil;
+    NfcTags nfcTags;
     Vibrator vib;
-    final long m_vibPattern_read[] = {0, 200};
-    final long m_vibPattern_error[] = {0, 500, 200, 500};
-    static final int SETTING = 8888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //接続先サーバのIPアドレスを取得
-        SharedPreferences prefs = getSharedPreferences("ConnectionData", Context.MODE_PRIVATE);
-        ip = "http://" + prefs.getString("ip", "");
-
+        hikiateUtil = new HikiateUtil(this);
         nfcTags = new NfcTags(this);
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
-
-
-        //test
-        addTextChangedListener();
-
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // クリック時の処理
-                String urlStr = "http://10.1.1.61/WebAPI_Koyo_C/hikiate/get/574237";
-                GetKokanInfoTask task = new GetKokanInfoTask(urlStr, "GET", MainActivity.this);
-                task.execute();
-            }
-        });
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // クリック時の処理
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("title")
-                        .setMessage(dataHikiate.KOKBAN + "  " + dataHikiate.ErrMsg)
-                        .setPositiveButton("OK", null)
-                        .show();
-            }
-        });
+        //Listener追加
+        hikiateUtil.addListener();
+        hikiateUtil.showMessage(Constants.MSG_STR);
     }
 
-    //test
-    public void setDataHikiate(DataHikiate d) {
-        this.dataHikiate = d;
-    }
-    public DataHikiate getDataHikiate() {
-        return this.dataHikiate;
-    }
-
+    //todo スッキリさせたい...
     //タグを読み込んだ時に実行される
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //バイブ
-        vib.vibrate(m_vibPattern_read, -1);
+        vib.vibrate(Constants.VIB_READ, -1);
+        //タグテキスト抽出
+        String tag = this.nfcTags.getStringInTag(intent);
 
-        String tagText = this.nfcTags.getStringInTag(intent);
-        if (!TextUtils.isEmpty(tagText)) {
-            //タグ読み取り時の処理
-            String q = "?can=" + tagText + "&cbn=" + dataHikiate.MM03_CBNCOD;
-            String urlStr = ip + "/WebAPI_Koyo_C/hikiate/check/" + q;
-            GetKokanInfoTask task = new GetKokanInfoTask(urlStr, "GET", MainActivity.this);
-            task.execute();
+        if (!TextUtils.isEmpty(tag)) {
+            //缶タグ追加処理
+            hikiateUtil.sendCheckCanTagRequest(tag);
         }
     }
 
-    //TODO URIをstring.xmlにおく。Util的なとこにまとめる
-    //addTextChangedListener
-    private void addTextChangedListener() {
-        //バーコードリーダー対応
-        final EditText e = findViewById(R.id.kokban_text);
-        e.addTextChangedListener(new TextWatcher(){
-            EditText editText = e;
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count){
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (editText.getText().length() >= 6) {
-                    //工程管理Noが6文字以上になったら、工程管理番号問い合わせをサーバーに送信する
-                    String urlStr = ip + "/WebAPI_Koyo_C/hikiate/get/" + editText.getText().toString();
-                    GetKokanInfoTask task = new GetKokanInfoTask(urlStr, "GET", MainActivity.this);
-                    task.execute();
-                    //キーボードをしまう
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-            }
-        });
+    //DataのGetter/Setter
+    public void setDataHikiate(DataHikiate d) {
+        this.dataHikiate = d;
+    }
+    public DataHikiate getDataHikiate() {
+        return this.dataHikiate;
     }
 
     //メニュー関連
@@ -148,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             //設定画面呼び出し
             Intent intent = new Intent(this, Setting.class);
-            int requestCode = SETTING;
+            int requestCode = Constants.SETTING;
             startActivityForResult(intent, requestCode);
             return true;
         }
@@ -173,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case SETTING:
+            case Constants.SETTING:
                 Toast.makeText(this, "設定が完了しました。", Toast.LENGTH_SHORT).show();
                 break;
             default:
