@@ -22,7 +22,7 @@ public class CheckCantagTask extends AbstractAsyncTask {
     private HikiateUtil hikiateUtil;
 
     public CheckCantagTask(MainActivity activity, String urlStr, String requestMethod) {
-        super(activity, urlStr, requestMethod);
+        super(activity, urlStr, requestMethod, true);
         this.activity = activity;
         this.display = new CantagDisplay(activity);
         this.hikiateUtil = new HikiateUtil(activity);

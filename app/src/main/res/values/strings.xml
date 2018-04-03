@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">HikiateWeb</string>
+    <string name="app_name">引当て</string>
     <string name="action_settings">設定</string>
     <string name="action_finish">終了</string>
-    <!--
+
     <string name="kokban">工管No.</string>
     <string name="hinban">品番</string>
     <string name="lotno">ロットNo.</string>
@@ -10,7 +10,7 @@
     <string name="cantag">缶タグ</string>
     <string name="clear">クリア</string>
     <string name="upd">登録</string>
-    -->
+    <!--
     <string name="kokban">KOKBAN</string>
     <string name="hinban">HINBAN</string>
     <string name="lotno">LOTNO</string>
@@ -18,4 +18,5 @@
     <string name="cantag">CANTAG</string>
     <string name="clear">CLEAR</string>
     <string name="upd">UPD</string>
+    -->
 </resources>

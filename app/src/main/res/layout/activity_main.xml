@@ -9,55 +9,51 @@
 
     <TextView
         android:id="@+id/t1"
-        android:layout_width="80dp"
+        style="@style/style_title"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:gravity="center"
         android:text="@string/kokban"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/kokban_text"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/t2"
-        android:layout_width="80dp"
+        style="@style/style_title"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:gravity="center"
         android:text="@string/hinban"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/hinban_text"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/t3"
-        android:layout_width="80dp"
+        style="@style/style_title"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:gravity="center"
         android:text="@string/lotno"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/lotno_text"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/t4"
-        android:layout_width="80dp"
+        style="@style/style_title"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:gravity="center"
         android:text="@string/carbon"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/carbon_text"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <EditText
         android:id="@+id/kokban_text"
+        style="@style/style_item_left"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/frame_style"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="18sp"
@@ -67,11 +63,11 @@
 
     <EditText
         android:id="@+id/hinban_text"
+        style="@style/style_item_left"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/frame_style"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
@@ -82,11 +78,11 @@
 
     <EditText
         android:id="@+id/lotno_text"
+        style="@style/style_item_left"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/frame_style"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
@@ -97,11 +93,11 @@
 
     <EditText
         android:id="@+id/carbon_text"
+        style="@style/style_item_left"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/frame_style"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
@@ -111,11 +107,12 @@
         tools:ignore="AndroidLintLabelFor" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="200dp"
         android:layout_height="1px"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="12dp"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,22 +122,22 @@
         android:id="@+id/clear_btn"
         android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/clear"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/msg_text" />
 
     <Button
         android:id="@+id/upd_btn"
         android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:enabled="false"
         android:text="@string/upd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/msg_text" />
 
     <TextView
         android:id="@+id/v1"
@@ -210,162 +207,131 @@
 
     <TextView
         android:id="@+id/c"
+        style="@style/style_title"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="12dp"
         android:text="@string/cantag"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/t4" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
         android:id="@+id/c1"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toEndOf="@+id/v1"
         app:layout_constraintTop_toBottomOf="@+id/c" />
 
     <TextView
         android:id="@+id/c2"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/v2"
         app:layout_constraintTop_toBottomOf="@+id/c1" />
 
     <TextView
         android:id="@+id/c3"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/v3"
         app:layout_constraintTop_toBottomOf="@+id/c2" />
 
     <TextView
         android:id="@+id/c4"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/v4"
         app:layout_constraintTop_toBottomOf="@+id/c3" />
 
     <TextView
         android:id="@+id/c5"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/v5"
         app:layout_constraintTop_toBottomOf="@+id/c4" />
 
     <TextView
         android:id="@+id/c6"
+        style="@style/style_item_center"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/v6"
         app:layout_constraintTop_toBottomOf="@+id/c5" />
 
     <TextView
+        style="@style/style_title"
         android:id="@+id/l"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:gravity="center"
         android:text="@string/lotno"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c"
         app:layout_constraintStart_toEndOf="@+id/c" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c1"
         app:layout_constraintStart_toEndOf="@+id/c1" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c2"
         app:layout_constraintStart_toEndOf="@+id/c2" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l3"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c3"
         app:layout_constraintStart_toEndOf="@+id/c3" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l4"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c4"
         app:layout_constraintStart_toEndOf="@+id/c4" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l5"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c5"
         app:layout_constraintStart_toEndOf="@+id/c5" />
 
     <TextView
+        style="@style/style_item_center"
         android:id="@+id/l6"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@drawable/frame_style"
-        android:gravity="center"
-        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/c6"
         app:layout_constraintStart_toEndOf="@+id/c6" />
 
@@ -380,15 +346,15 @@
         android:id="@+id/msg_text"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="84dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c6" />
 
 </android.support.constraint.ConstraintLayout>

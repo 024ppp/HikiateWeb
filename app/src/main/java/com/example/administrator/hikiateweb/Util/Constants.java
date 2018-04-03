@@ -15,13 +15,16 @@ public final class Constants {
     public static final String MSG_CAN_FIN = "全てＯＫです。\n登録してください。";
     public static final String MSG_CAN_MAX = "最大数スキャン済みです。\n登録してください。";
     public static final String MSG_CAN_SCANNED = "はスキャン済みです。";
+    public static final String MSG_EMPTY = "レスポンスデータが空白です。";
     public static final String MSG_TIMEOUT = "接続がタイムアウトしました。\n再試行してください。";
+    public static final String MSG_SERVER_ERR = "サーバーとの通信が行われていません。";
 
     public static final String URI_GET = "/WebAPI_Koyo_C/hikiate/get/";
     public static final String URI_CHECK = "/WebAPI_Koyo_C/hikiate/check/";
     public static final String URI_POST = "/WebAPI_Koyo_C/api/hikiate";
 
     public static final String STR_TIMEOUT = "TIMEOUT";
+    public static final String STR_SERVER_ERR = "SERVER_ERR";
 
     //long
     public static final long VIB_READ[] = {0, 200};

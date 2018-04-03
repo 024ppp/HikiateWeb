@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Util.Constants;
 import com.example.administrator.hikiateweb.View.MainActivity;
 
@@ -13,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
@@ -27,12 +28,17 @@ public abstract class AbstractAsyncTask extends AsyncTask<String, String, String
     private MainActivity activity;
     private String urlStr;
     private String requestMethod;
+    private boolean shouldShowDialog;
     ProgressDialog dialog;
 
-    public AbstractAsyncTask(MainActivity activity, String urlStr, String requestMethod) {
+    public AbstractAsyncTask(MainActivity activity
+            , String urlStr
+            , String requestMethod
+            , boolean shouldShowDialog) {
         this.activity = activity;
         this.urlStr = urlStr;
         this.requestMethod = requestMethod;
+        this.shouldShowDialog = shouldShowDialog;
     }
 
     public abstract void applyDataToScreen(String result);
@@ -43,7 +49,9 @@ public abstract class AbstractAsyncTask extends AsyncTask<String, String, String
         dialog = new ProgressDialog(activity);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage("サーバー問い合わせ中...");
-        dialog.show();
+        if (shouldShowDialog) {
+            dialog.show();
+        }
     }
 
     @Override
@@ -90,12 +98,18 @@ public abstract class AbstractAsyncTask extends AsyncTask<String, String, String
                     break;
             }
 
+            int hoge = con.getResponseCode();
+            //ステータスコードが400,500番台の場合、getInputStreamでIOExceptionが発生するらしい
             is = con.getInputStream();
             result = convertResponseToString(is);
         }
         catch (SocketTimeoutException st_ex) {
+            //タイムアウト
             result = Constants.STR_TIMEOUT;
-            Log.d("test", st_ex.getMessage());
+        }
+        catch (IOException io_ex) {
+            //サーバーエラー
+            result = Constants.STR_SERVER_ERR;
         }
         catch (Exception ex) {
         }
@@ -117,24 +131,40 @@ public abstract class AbstractAsyncTask extends AsyncTask<String, String, String
     @Override
     public void onPostExecute(String result) {
         try {
-            //空文字の返答
-            if (TextUtils.isEmpty(result)) {
-                return;
-            }
-            //結果がTIMEOUT文字列だった場合
-            if (result.equals(Constants.STR_TIMEOUT)) {
-                afterTimeoutProcess();
-                return;
-            }
-            //画面に反映
-            applyDataToScreen(result);
+            switchProcessingInResponseData(result);
         }
         finally {
-            dialog.dismiss();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
     }
 
-    // レスポンスデータをStringデータに変換する
+    //レスポンスデータで処理を分岐
+    private void switchProcessingInResponseData(String result) {
+        //todo とりあえずのやり方。エラーアナウンスをうまいことしたい
+        TextView msg_text = activity.findViewById(R.id.msg_text);
+
+        switch (result) {
+            //空文字
+            case "":
+                msg_text.setText(Constants.MSG_EMPTY);
+                return;
+            //タイムアウト
+            case Constants.STR_TIMEOUT:
+                afterTimeoutProcess();
+                return;
+            //サーバーエラー
+            case Constants.STR_SERVER_ERR:
+                msg_text.setText(Constants.MSG_SERVER_ERR);
+                return;
+            //正常な値
+            default:
+                applyDataToScreen(result);
+        }
+    }
+
+    //レスポンスデータをStringデータに変換する
     private String convertResponseToString(InputStream is) throws IOException, UnsupportedEncodingException {
         StringBuffer sb = new StringBuffer();
         String st = "";

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         hikiateUtil.showMessage(Constants.MSG_STR);
     }
 
-    //todo スッキリさせたい...
     //タグを読み込んだ時に実行される
     @Override
     protected void onNewIntent(Intent intent) {
