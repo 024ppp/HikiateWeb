@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.example.administrator.hikiateweb.Display.CantagDisplay;
 import com.example.administrator.hikiateweb.Display.Display;
+import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataCantag;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.Util.HikiateUtil;
@@ -19,13 +20,11 @@ import java.io.IOException;
 public class CheckCantagTask extends AbstractAsyncTask {
     private MainActivity activity;
     private Display display;
-    private HikiateUtil hikiateUtil;
 
     public CheckCantagTask(MainActivity activity, String urlStr, String requestMethod) {
         super(activity, urlStr, requestMethod, true);
         this.activity = activity;
         this.display = new CantagDisplay(activity);
-        this.hikiateUtil = new HikiateUtil(activity);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class CheckCantagTask extends AbstractAsyncTask {
             DataCantag dataCantag = mapper.readValue(result, DataCantag.class);
 
             //エラーチェック
-            if (hikiateUtil.isErrorOccurred(dataCantag)) {
+            if (isErrorOccurred(dataCantag)) {
                 return;
             }
 
@@ -61,5 +60,14 @@ public class CheckCantagTask extends AbstractAsyncTask {
     @Override
     public void afterTimeoutProcess() {
         display.showTimeoutMessage();
+    }
+
+    //サーバーでエラーが起こったかどうかをチェック
+    public boolean isErrorOccurred(Data d) {
+        if (TextUtils.isEmpty(d.ErrMsg)) {
+            return false;
+        }
+        HikiateUtil.showMessage(d.ErrMsg);
+        return true;
     }
 }

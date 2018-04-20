@@ -30,7 +30,6 @@ import com.example.administrator.hikiateweb.Util.HikiateUtil;
 
 public class MainActivity extends AppCompatActivity {
     DataHikiate dataHikiate;
-    HikiateUtil hikiateUtil;
     NfcTags nfcTags;
     Vibrator vib;
 
@@ -39,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hikiateUtil = new HikiateUtil(this);
+        //Util使用準備
+        HikiateUtil.Set(this);
+
         nfcTags = new NfcTags(this);
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
-        //Listener追加
-        hikiateUtil.addListener();
-        hikiateUtil.showMessage(Constants.MSG_STR);
+        HikiateUtil.showMessage(Constants.MSG_STR);
     }
 
     //タグを読み込んだ時に実行される
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(tag)) {
             //缶タグ追加処理
-            hikiateUtil.sendCheckCanTagRequest(tag);
+            HikiateUtil.sendCannoAfterTouch(tag);
         }
     }
 

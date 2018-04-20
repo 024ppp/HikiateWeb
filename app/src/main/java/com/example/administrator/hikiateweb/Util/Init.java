@@ -27,20 +27,27 @@ public final class Init {
                                                 , activity.findViewById(R.id.carbon_text)};
         for (EditText e : arr_edittext) { e.setText(""); }
 
+        //Cantag
+        EditText[] arr_c_text = new EditText[]{activity.findViewById(R.id.c1)
+                                             , activity.findViewById(R.id.c2)
+                                             , activity.findViewById(R.id.c3)
+                                             , activity.findViewById(R.id.c4)
+                                             , activity.findViewById(R.id.c5)
+                                             , activity.findViewById(R.id.c6)};
+        for (EditText e : arr_c_text) {
+            e.setText("");
+            e.setFocusable(true);
+        }
+
         //TextView
-        TextView[] arr_textview = new TextView[] {activity.findViewById(R.id.c1)
-                                                , activity.findViewById(R.id.c2)
-                                                , activity.findViewById(R.id.c3)
-                                                , activity.findViewById(R.id.c4)
-                                                , activity.findViewById(R.id.c5)
-                                                , activity.findViewById(R.id.c6)
-                                                , activity.findViewById(R.id.l1)
+        TextView[] arr_textview = new TextView[] {activity.findViewById(R.id.l1)
                                                 , activity.findViewById(R.id.l2)
                                                 , activity.findViewById(R.id.l3)
                                                 , activity.findViewById(R.id.l4)
                                                 , activity.findViewById(R.id.l5)
                                                 , activity.findViewById(R.id.l6)};
         for (TextView t : arr_textview) { t.setText(""); }
+
         //msg
         TextView msg_text = activity.findViewById(R.id.msg_text);
         msg_text.setText(Constants.MSG_STR);

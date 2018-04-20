@@ -3,6 +3,7 @@ package com.example.administrator.hikiateweb.Display;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.hikiateweb.Model.Data.Data;
@@ -51,8 +52,9 @@ public class CantagDisplay extends Display{
         }
 
         for (int i = 0; i < data.PC01_CANNO.size(); i++) {
-            if (TextUtils.isEmpty(arr_c_text[i].getText())) {
+            if (TextUtils.isEmpty(arr_l_text[i].getText())) {
                 arr_c_text[i].setText(data.PC01_CANNO.get(i));
+//                arr_c_text[i].setFocusable(false);
                 arr_l_text[i].setText(data.MD01X_LOTBAN.get(i));
                 break;
             }

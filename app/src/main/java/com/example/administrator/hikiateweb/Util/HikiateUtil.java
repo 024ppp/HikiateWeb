@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,54 +14,129 @@ import com.example.administrator.hikiateweb.AsyncTask.AbstractAsyncTask;
 import com.example.administrator.hikiateweb.AsyncTask.CheckCantagTask;
 import com.example.administrator.hikiateweb.AsyncTask.GetKokanInfoTask;
 import com.example.administrator.hikiateweb.AsyncTask.UpdateProcessTask;
-import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.View.MainActivity;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * Created by Administrator on 2018/03/27.
  */
 
+//インスタンス化せず使用する感じになりそう
 public class HikiateUtil {
-    private MainActivity activity;
-    private TextView msg_text;
-    private String ip;
+    private static MainActivity activity;
+    private static TextView msg_text;
+    private static String ip;
 
-    public HikiateUtil(MainActivity activity) {
-        this.activity = activity;
-        this.msg_text = activity.findViewById(R.id.msg_text);
+    //todo staticメソッドで使用しているメンバ変数が代入済みかどうかは未確認なので中々あぶない
+    //todo そもそもstaticメソッドをここまで利用してていいんか？めっちゃ便利やけども
+    //-----static-----
+    //--public
+    public static void Set(MainActivity mainActivity) {
+        activity = mainActivity;
+        msg_text = activity.findViewById(R.id.msg_text);
 
         //接続先サーバのIPアドレス(URI)を取得
         SharedPreferences prefs = activity.getSharedPreferences("ConnectionData", Context.MODE_PRIVATE);
         ip = "http://" + prefs.getString("ip", "");
     }
 
-    //サーバーでエラーが起こったかどうかをチェック
-    public boolean isErrorOccurred(Data d) {
-        if (TextUtils.isEmpty(d.ErrMsg)) {
-            return false;
-        }
+    //工管番号スキャン時本処理
+    public static void sendKokban(EditText editText){
+        String txt = editText.getText().toString();
+        //文字数チェック
+        if (txt.length() < 6) { return; }
 
-        if (this.msg_text == null) {
-            return false;
-        }
+        //工程管理Noが6文字以上になったら、工程管理番号問い合わせをサーバーに送信する
+        String urlStr = createURI("GET") + txt;
+        GetKokanInfoTask task = new GetKokanInfoTask(activity, urlStr, "GET");
+        task.execute();
+        //キーボードをしまう
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
-        msg_text.setText(d.ErrMsg);
-        return true;
+    //todo NFCタグ値取得後にこっちが発生してしまうの腹立つなんとかせねば(未使用)
+    //缶No.バーコードスキャン時本処理
+    public static void sendCanno(EditText editText){
+        String txt = editText.getText().toString();
+        //文字数チェック
+        if (txt.length() < 7) { return; }
+
+        //クリア
+        editText.setText("");
+
+        //リクエスト送信可能かチェックしてから送信
+        DataHikiate dataHikiate = activity.getDataHikiate();
+        if (canSendRequest(dataHikiate, txt)) {
+            //カーボンコード一致チェックを行う
+            String q = "?can=" + txt + "&cbn=" + dataHikiate.MM03_CBNCOD;
+            String urlStr = createURI("CHECK") + q;
+            CheckCantagTask task = new CheckCantagTask(activity, urlStr, "GET");
+            task.execute();
+            //キーボードをしまう
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    //缶タグタッチ時本処理
+    public static void sendCannoAfterTouch(String tag) {
+        DataHikiate dataHikiate = activity.getDataHikiate();
+        //リクエスト送信可能かチェックしてから送信
+        if (canSendRequest(dataHikiate, tag)) {
+            //カーボンコード一致チェックを行う
+            String q = "?can=" + tag + "&cbn=" + dataHikiate.MM03_CBNCOD;
+            String urlStr = createURI("CHECK") + q;
+            CheckCantagTask task = new CheckCantagTask(activity, urlStr, "GET");
+            task.execute();
+        }
+    }
+
+    //クリアボタン押下時本処理
+    public static void pushClear() {
+        //Dialog(OK,Cancel Ver.)
+        new android.app.AlertDialog.Builder(activity)
+                .setTitle("確認")
+                .setMessage("クリアしてよろしいですか？")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // OK button pressed
+                        Init.initPage(activity);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    //登録ボタン押下時本処理
+    public static void pushUpd() {
+        //Dialog(OK,Cancel Ver.)
+        new android.app.AlertDialog.Builder(activity)
+                .setTitle("確認")
+                .setMessage("登録しますか？")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // OK button pressed
+                        sendUpdateRequest();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     //メッセージ表示
-    public void showMessage(String msg) {
+    public static void showMessage(String msg) {
         msg_text.setText(msg);
     }
 
+    //--private
     //リクエスト先URI作成
-    public String createURI(String act) {
+    private static String createURI(String act) {
         String uri = ip;
 
         switch (act) {
@@ -82,6 +156,67 @@ public class HikiateUtil {
         return uri;
     }
 
+    //リクエスト送信可能かチェック
+    private static boolean canSendRequest(DataHikiate dataHikiate, String tag) {
+        //工管番号リード以降でないと処理できない
+        if (dataHikiate == null) {
+            return false;
+        }
+
+        //最大数スキャン済みかどうかチェック
+        if (dataHikiate.isCanTagMaxCount()) {
+            showMessage(Constants.MSG_CAN_MAX);
+            return false;
+        }
+
+        //缶タグスキャン済みチェック
+        if (dataHikiate.isThisCanTagScanned(tag)) {
+            //スキャン済み
+            showMessage(tag + Constants.MSG_CAN_SCANNED);
+            return false;
+        }
+        return true;
+    }
+
+    //更新リクエスト本処理
+    private static void sendUpdateRequest() {
+        DataHikiate dataHikiate = activity.getDataHikiate();
+        try {
+            String urlStr = createURI("POST");
+            UpdateProcessTask task = new UpdateProcessTask(activity, urlStr, "POST");
+            //送信データ作成
+            String json = JsonConverter.toString(dataHikiate);
+            task.execute(json);
+        }
+        catch (Exception ex) {
+        }
+    }
+    //-----------------
+
+    //キャンセル後にProgressDialogが消えないため、不使用
+    //APIリクエストのTimeout設定
+    private void setTimeout(final AbstractAsyncTask task) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    task.get(1000, TimeUnit.MICROSECONDS);
+                }
+                catch (Exception ex) {
+                    task.cancel(true);
+                    msg_text.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            msg_text.setText(Constants.MSG_TIMEOUT);
+                        }
+                    });
+                    ex.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //カスタムビューにリスナー処理を実装させた（？）ので不使用
     //Listener追加
     public void addListener() {
         //---EditText---
@@ -148,77 +283,5 @@ public class HikiateUtil {
                         .show();
             }
         });
-    }
-
-    //更新リクエスト本処理
-    private void sendUpdateRequest() {
-        DataHikiate dataHikiate = activity.getDataHikiate();
-        try {
-            String urlStr = createURI("POST");
-            UpdateProcessTask task = new UpdateProcessTask(activity, urlStr, "POST");
-            //送信データ作成
-            String json = JsonConverter.toString(dataHikiate);
-            task.execute(json);
-        }
-        catch (Exception ex) {
-        }
-    }
-
-    //缶タグスキャン時本処理
-    public void sendCheckCanTagRequest(String tag) {
-        DataHikiate dataHikiate = activity.getDataHikiate();
-        //リクエスト送信可能かチェックしてから送信
-        if (canSendRequest(dataHikiate, tag)) {
-            //カーボンコード一致チェックを行う
-            String q = "?can=" + tag + "&cbn=" + dataHikiate.MM03_CBNCOD;
-            String urlStr = createURI("CHECK") + q;
-            CheckCantagTask task = new CheckCantagTask(activity, urlStr, "GET");
-            task.execute();
-        }
-    }
-
-    //リクエスト送信可能かチェック
-    private boolean canSendRequest(DataHikiate dataHikiate, String tag) {
-        //工管番号リード以降でないと処理できない
-        if (dataHikiate == null) {
-            return false;
-        }
-
-        //最大数スキャン済みかどうかチェック
-        if (dataHikiate.isCanTagMaxCount()) {
-            showMessage(Constants.MSG_CAN_MAX);
-            return false;
-        }
-
-        //缶タグスキャン済みチェック
-        if (dataHikiate.isThisCanTagScanned(tag)) {
-            //スキャン済み
-            showMessage(tag + Constants.MSG_CAN_SCANNED);
-            return false;
-        }
-        return true;
-    }
-
-    //キャンセル後にProgressDialogが消えないため、不使用
-    //APIリクエストのTimeout設定
-    private void setTimeout(final AbstractAsyncTask task) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    task.get(1000, TimeUnit.MICROSECONDS);
-                }
-                catch (Exception ex) {
-                    task.cancel(true);
-                    msg_text.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            msg_text.setText(Constants.MSG_TIMEOUT);
-                        }
-                    });
-                    ex.printStackTrace();
-                }
-            }
-        }).start();
     }
 }
