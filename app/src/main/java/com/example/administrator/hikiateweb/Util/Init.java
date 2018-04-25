@@ -28,15 +28,14 @@ public final class Init {
         for (EditText e : arr_edittext) { e.setText(""); }
 
         //Cantag
-        EditText[] arr_c_text = new EditText[]{activity.findViewById(R.id.c1)
+        TextView[] arr_c_text = new TextView[]{activity.findViewById(R.id.c1)
                                              , activity.findViewById(R.id.c2)
                                              , activity.findViewById(R.id.c3)
                                              , activity.findViewById(R.id.c4)
                                              , activity.findViewById(R.id.c5)
                                              , activity.findViewById(R.id.c6)};
-        for (EditText e : arr_c_text) {
-            e.setText("");
-            e.setFocusable(true);
+        for (TextView t : arr_c_text) {
+            t.setText("");
         }
 
         //TextView
