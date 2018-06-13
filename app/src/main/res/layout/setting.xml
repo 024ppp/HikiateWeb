@@ -31,7 +31,7 @@
                 android:layout_width="125dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|center_horizontal"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:layout_marginRight="5dp"
                 android:text="IP" />
 
@@ -39,7 +39,31 @@
                 android:id="@+id/txtIP"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="30sp"
+                android:textSize="25sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblKojo"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="25sp"
+                android:layout_marginRight="5dp"
+                android:text="工場区分" />
+
+            <EditText
+                android:id="@+id/txtKojo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="25sp"
                 />
         </LinearLayout>
 

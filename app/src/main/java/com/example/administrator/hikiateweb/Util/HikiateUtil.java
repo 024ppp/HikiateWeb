@@ -134,6 +134,32 @@ public class HikiateUtil {
         msg_text.setText(msg);
     }
 
+    //工場区分取得
+    public static String getKojokbn(int mode) {
+        SharedPreferences prefs = activity.getSharedPreferences("ConnectionData", Context.MODE_PRIVATE);
+        String kojokbn = prefs.getString("kojo", "");
+
+        //0：工場区分をそのまま返す　1：工場名を返す
+        switch (mode) {
+            case 0:
+                return kojokbn;
+            case 1:
+                switch (kojokbn) {
+                    case "0":
+                        return "(本社)";
+                    case "1":
+                        return "(広陽)";
+                    case "2":
+                        return "(玉城)";
+                    default:
+                        return "(工場区分未選択)";
+                }
+        }
+        return "99";
+    }
+
+
+
     //--private
     //リクエスト先URI作成
     private static String createURI(String act) {
@@ -181,6 +207,8 @@ public class HikiateUtil {
     //更新リクエスト本処理
     private static void sendUpdateRequest() {
         DataHikiate dataHikiate = activity.getDataHikiate();
+        //20180518 工場区分追加
+        dataHikiate.KOJOKBN = getKojokbn(0);
         try {
             String urlStr = createURI("POST");
             UpdateProcessTask task = new UpdateProcessTask(activity, urlStr, "POST");

@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         HikiateUtil.showMessage(Constants.MSG_STR);
+        //タイトルを動的に変更
+        setTitle("引当て" + HikiateUtil.getKojokbn(1));
     }
 
     //タグを読み込んだ時に実行される

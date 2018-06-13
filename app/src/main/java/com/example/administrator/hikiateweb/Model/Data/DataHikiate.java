@@ -16,6 +16,8 @@ public class DataHikiate extends Data {
     public String MD01_SFCD = "";
     public String MM03_CBNCOD = "";
     public String MM03_ZAINMK = "";
+    //20180518 工場区分追加
+    public String KOJOKBN = "";
 
     //缶タグ情報（缶数分）
     public ArrayList<String> PC01_CANNO = new ArrayList<String>();

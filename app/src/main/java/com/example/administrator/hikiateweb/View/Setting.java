@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.example.administrator.hikiateweb.R;
 
 public class Setting extends Activity implements View.OnClickListener {
-    EditText txtIP;
+    EditText txtIP, txtKojo;
     Button btn;
     SharedPreferences prefs;
 
@@ -23,14 +23,17 @@ public class Setting extends Activity implements View.OnClickListener {
         setContentView(R.layout.setting);
 
         txtIP = findViewById(R.id.txtIP);
+        txtKojo = findViewById(R.id.txtKojo);
         btn = findViewById(R.id.button);
         btn.setOnClickListener(this);
 
         //接続先を取得
         prefs = getSharedPreferences("ConnectionData", Context.MODE_PRIVATE);
         String ip = prefs.getString("ip", "");
+        String kojo = prefs.getString("kojo", "");
 
         txtIP.setText(ip);
+        txtKojo.setText(kojo);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -54,6 +57,7 @@ public class Setting extends Activity implements View.OnClickListener {
         //Setting
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ip", txtIP.getText().toString());
+        editor.putString("kojo", txtKojo.getText().toString());
         editor.apply();
 
         // setResult() で bundle を載せた
