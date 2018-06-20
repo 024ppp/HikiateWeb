@@ -10,6 +10,7 @@ import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Util.Constants;
+import com.example.administrator.hikiateweb.Util.HikiateUtil;
 
 /**
  * Created by Administrator on 2018/03/20.
@@ -47,6 +48,8 @@ public class CantagDisplay extends Display{
         DataHikiate data = (DataHikiate) d;
 
         if (!TextUtils.isEmpty(data.ErrMsg)) {
+            //バイブエラー
+            HikiateUtil.vibrate(Constants.VIB_ERROR);
             msg_text.setText(data.ErrMsg);
             return false;
         }

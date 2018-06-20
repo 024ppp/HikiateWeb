@@ -31,7 +31,6 @@ import com.example.administrator.hikiateweb.Util.HikiateUtil;
 public class MainActivity extends AppCompatActivity {
     DataHikiate dataHikiate;
     NfcTags nfcTags;
-    Vibrator vib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         HikiateUtil.Set(this);
 
         nfcTags = new NfcTags(this);
-        vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         HikiateUtil.showMessage(Constants.MSG_STR);
         //タイトルを動的に変更
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //バイブ
-        vib.vibrate(Constants.VIB_READ, -1);
+        HikiateUtil.vibrate(Constants.VIB_NORMAL);
         //タグテキスト抽出
         String tag = this.nfcTags.getStringInTag(intent);
 
@@ -116,10 +114,23 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case Constants.SETTING:
                 Toast.makeText(this, "設定が完了しました。", Toast.LENGTH_SHORT).show();
+                //再起動
+                reload();
                 break;
             default:
                 break;
         }
+    }
+
+    //再起動
+    private void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
     //終了処理群

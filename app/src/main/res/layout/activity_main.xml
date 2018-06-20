@@ -55,7 +55,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/t1"
         app:layout_constraintTop_toTopOf="parent"

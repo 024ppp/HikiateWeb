@@ -7,6 +7,7 @@ import com.example.administrator.hikiateweb.Display.Display;
 import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataCantag;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
+import com.example.administrator.hikiateweb.Util.Constants;
 import com.example.administrator.hikiateweb.Util.HikiateUtil;
 import com.example.administrator.hikiateweb.View.MainActivity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,6 +68,8 @@ public class CheckCantagTask extends AbstractAsyncTask {
         if (TextUtils.isEmpty(d.ErrMsg)) {
             return false;
         }
+        //バイブエラー
+        HikiateUtil.vibrate(Constants.VIB_ERROR);
         HikiateUtil.showMessage(d.ErrMsg);
         return true;
     }

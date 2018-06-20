@@ -3,6 +3,7 @@ package com.example.administrator.hikiateweb.Util;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,8 +18,9 @@ import com.example.administrator.hikiateweb.AsyncTask.UpdateProcessTask;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.View.MainActivity;
-
 import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 /**
  * Created by Administrator on 2018/03/27.
@@ -29,6 +31,7 @@ public class HikiateUtil {
     private static MainActivity activity;
     private static TextView msg_text;
     private static String ip;
+    private static Vibrator vib;
 
     //todo staticメソッドで使用しているメンバ変数が代入済みかどうかは未確認なので中々あぶない
     //todo そもそもstaticメソッドをここまで利用してていいんか？めっちゃ便利やけども
@@ -41,6 +44,9 @@ public class HikiateUtil {
         //接続先サーバのIPアドレス(URI)を取得
         SharedPreferences prefs = activity.getSharedPreferences("ConnectionData", Context.MODE_PRIVATE);
         ip = "http://" + prefs.getString("ip", "");
+
+        //バイブ設定
+        vib = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
     }
 
     //工管番号スキャン時本処理
@@ -156,6 +162,20 @@ public class HikiateUtil {
                 }
         }
         return "99";
+    }
+
+    //バイブ
+    public static void vibrate(int mode) {
+        switch (mode) {
+            case Constants.VIB_NORMAL:
+                //バイブ
+                vib.vibrate(Constants.PATTERN_NORMAL, -1);
+                break;
+            case Constants.VIB_ERROR:
+                //バイブエラー
+                vib.vibrate(Constants.PATTERN_ERROR, -1);
+                break;
+        }
     }
 
 

@@ -39,6 +39,7 @@
                 android:id="@+id/txtIP"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="phone"
                 android:textSize="25sp"
                 />
         </LinearLayout>
@@ -63,6 +64,7 @@
                 android:id="@+id/txtKojo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="number"
                 android:textSize="25sp"
                 />
         </LinearLayout>

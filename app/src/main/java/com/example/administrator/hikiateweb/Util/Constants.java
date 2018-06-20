@@ -27,13 +27,15 @@ public final class Constants {
     public static final String STR_SERVER_ERR = "SERVER_ERR";
 
     //long
-    public static final long VIB_READ[] = {0, 200};
-    public static final long VIB_ERROR[] = {0, 500, 200, 500};
+    public static final long PATTERN_NORMAL[] = {0, 200};
+    public static final long PATTERN_ERROR[] = {0, 500, 200, 500};
 
     //int
     public static final int TIMEOUT_MILLSEC = 5000;
     public static final int CNT_CAN_MAX = 6;
     public static final int SETTING = 8888;
+    public static final int VIB_NORMAL = 0;
+    public static final int VIB_ERROR = 1;
 
     private Constants (){}
 }
