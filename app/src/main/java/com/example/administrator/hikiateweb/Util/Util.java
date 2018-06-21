@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.administrator.hikiateweb.AsyncTask.AbstractAsyncTask;
 import com.example.administrator.hikiateweb.AsyncTask.CheckCantagTask;
+import com.example.administrator.hikiateweb.AsyncTask.ConfirmServerTask;
 import com.example.administrator.hikiateweb.AsyncTask.GetKokanInfoTask;
 import com.example.administrator.hikiateweb.AsyncTask.UpdateProcessTask;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
@@ -27,7 +28,7 @@ import static android.content.Context.VIBRATOR_SERVICE;
  */
 
 //インスタンス化せず使用する感じになりそう
-public class HikiateUtil {
+public class Util {
     private static MainActivity activity;
     private static TextView msg_text;
     private static String ip;
@@ -47,6 +48,17 @@ public class HikiateUtil {
 
         //バイブ設定
         vib = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
+    }
+
+    //起動時サーバーチェック
+    public static void confirmServerConnection() {
+        try {
+            String urlStr = createURI("SERVER");
+            ConfirmServerTask task = new ConfirmServerTask(activity, urlStr, "GET");
+            task.execute();
+        }
+        catch (Exception ex) {
+        }
     }
 
     //工管番号スキャン時本処理
@@ -194,6 +206,9 @@ public class HikiateUtil {
                 break;
             case "POST":
                 uri += Constants.URI_POST;
+                break;
+            case "SERVER":
+                uri += Constants.URI_SERVER;
                 break;
             default:
                 uri = "";

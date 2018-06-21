@@ -5,7 +5,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 
 /**
  * Created by Administrator on 2018/04/12.
@@ -23,7 +23,7 @@ public class ButtonClear extends AppCompatButton implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        HikiateUtil.pushClear();
+        Util.pushClear();
     }
 
 }

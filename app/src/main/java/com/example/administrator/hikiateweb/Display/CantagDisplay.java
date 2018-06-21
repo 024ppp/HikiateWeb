@@ -3,14 +3,13 @@ package com.example.administrator.hikiateweb.Display;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Util.Constants;
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 
 /**
  * Created by Administrator on 2018/03/20.
@@ -49,7 +48,7 @@ public class CantagDisplay extends Display{
 
         if (!TextUtils.isEmpty(data.ErrMsg)) {
             //バイブエラー
-            HikiateUtil.vibrate(Constants.VIB_ERROR);
+            Util.vibrate(Constants.VIB_ERROR);
             msg_text.setText(data.ErrMsg);
             return false;
         }

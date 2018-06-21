@@ -5,7 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 
 /**
  * Created by Administrator on 2018/04/12.
@@ -31,6 +31,6 @@ public class EditTextCanno extends android.support.v7.widget.AppCompatEditText i
     }
     @Override
     public void afterTextChanged(Editable s) {
-        HikiateUtil.sendCanno(this);
+        Util.sendCanno(this);
     }
 }

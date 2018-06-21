@@ -1,32 +1,21 @@
 package com.example.administrator.hikiateweb.View;
 
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.administrator.hikiateweb.AsyncTask.CheckCantagTask;
-import com.example.administrator.hikiateweb.AsyncTask.GetKokanInfoTask;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Controller.NfcTags;
 import com.example.administrator.hikiateweb.Util.Constants;
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 
 public class MainActivity extends AppCompatActivity {
     DataHikiate dataHikiate;
@@ -38,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Util使用準備
-        HikiateUtil.Set(this);
+        Util.Set(this);
 
         nfcTags = new NfcTags(this);
 
-        HikiateUtil.showMessage(Constants.MSG_STR);
+        Util.showMessage(Constants.MSG_STR);
         //タイトルを動的に変更
-        setTitle("引当て" + HikiateUtil.getKojokbn(1));
+        setTitle("引当て" + Util.getKojokbn(1));
+        //サーバー通信チェック
+        Util.confirmServerConnection();
     }
 
     //タグを読み込んだ時に実行される
@@ -52,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //バイブ
-        HikiateUtil.vibrate(Constants.VIB_NORMAL);
+        Util.vibrate(Constants.VIB_NORMAL);
         //タグテキスト抽出
         String tag = this.nfcTags.getStringInTag(intent);
 
         if (!TextUtils.isEmpty(tag)) {
             //缶タグ追加処理
-            HikiateUtil.sendCannoAfterTouch(tag);
+            Util.sendCannoAfterTouch(tag);
         }
     }
 

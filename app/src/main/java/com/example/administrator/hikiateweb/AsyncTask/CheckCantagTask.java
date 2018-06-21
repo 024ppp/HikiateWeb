@@ -8,11 +8,9 @@ import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataCantag;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.Util.Constants;
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 import com.example.administrator.hikiateweb.View.MainActivity;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 /**
  * Created by Administrator on 2018/03/20.
@@ -69,8 +67,8 @@ public class CheckCantagTask extends AbstractAsyncTask {
             return false;
         }
         //バイブエラー
-        HikiateUtil.vibrate(Constants.VIB_ERROR);
-        HikiateUtil.showMessage(d.ErrMsg);
+        Util.vibrate(Constants.VIB_ERROR);
+        Util.showMessage(d.ErrMsg);
         return true;
     }
 }

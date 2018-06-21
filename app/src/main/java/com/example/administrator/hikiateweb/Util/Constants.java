@@ -22,6 +22,7 @@ public final class Constants {
     public static final String URI_GET = "/WebAPI_Koyo_C/hikiate/get/";
     public static final String URI_CHECK = "/WebAPI_Koyo_C/hikiate/check/";
     public static final String URI_POST = "/WebAPI_Koyo_C/api/hikiate";
+    public static final String URI_SERVER = "/WebAPI_Koyo_C/api/values";
 
     public static final String STR_TIMEOUT = "TIMEOUT";
     public static final String STR_SERVER_ERR = "SERVER_ERR";

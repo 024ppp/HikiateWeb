@@ -9,7 +9,7 @@ import com.example.administrator.hikiateweb.Model.Data.Data;
 import com.example.administrator.hikiateweb.Model.Data.DataHikiate;
 import com.example.administrator.hikiateweb.R;
 import com.example.administrator.hikiateweb.Util.Constants;
-import com.example.administrator.hikiateweb.Util.HikiateUtil;
+import com.example.administrator.hikiateweb.Util.Util;
 
 /**
  * Created by Administrator on 2018/03/13.
@@ -34,7 +34,7 @@ public class KokanInfoDisplay extends Display{
 
         if (!TextUtils.isEmpty(data.ErrMsg)) {
             //バイブエラー
-            HikiateUtil.vibrate(Constants.VIB_ERROR);
+            Util.vibrate(Constants.VIB_ERROR);
             kokban_text.setText("");
             msg_text.setText(data.ErrMsg);
             return false;
