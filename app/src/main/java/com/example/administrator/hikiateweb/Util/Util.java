@@ -132,6 +132,7 @@ public class Util {
 
     //登録ボタン押下時本処理
     public static void pushUpd() {
+        /* 20180711 ダイアログなしで更新
         //Dialog(OK,Cancel Ver.)
         new android.app.AlertDialog.Builder(activity)
                 .setTitle("確認")
@@ -145,6 +146,8 @@ public class Util {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+        */
+        sendUpdateRequest();
     }
 
     //メッセージ表示
